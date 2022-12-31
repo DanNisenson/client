@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable @next/next/no-img-element */
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Link from "next/link";
 import Layout from "../Layout";
 import type { Hero } from "../../types/heroes";
-import { useAppContext } from "../context/sharedData";
+import SharedData from "../../context/sharedData";
+import apiCalls from "../../utils/apiCalls";
 
 const AllHeros = () => {
-  const context = useAppContext();
+  const context = useContext(SharedData);
 
   useEffect(() => {
     const getAllHeroes = async () => {
-      const resp: any = await axios.get("http://localhost:3003/");
-      // setHeros(resp.data);
+      const resp = await apiCalls.getAllHeroes();
       context.setHeroes(resp.data);
     };
     getAllHeroes();
@@ -19,13 +20,22 @@ const AllHeros = () => {
 
   return (
     <div className="main">
-      <h2>All Heroes</h2>
+      <h2 className="page-title">All Heroes</h2>
+      <div className="all-heroes">
       {context.heroes &&
         context.heroes.map((hero: Hero) => (
-          <Link href={`/heroes/${hero.id}`} key={hero.id}>
-            {hero.name}
-          </Link>
+          <div  key={hero.id}>
+            <Link className="all-heroes__hero" href={`/heroes/${hero.id}`}>
+              <img
+                className="all-heroes__img"
+                src={hero.image}
+                alt="Picture of the author"
+              />
+              {hero.name}
+            </Link>
+          </div>
         ))}
+        </div>
     </div>
   );
 };

@@ -1,22 +1,26 @@
 import "../styles/globals.css";
-import type { ReactElement, ReactNode } from 'react'
-import type { NextPage } from 'next'
+import type { ReactElement, ReactNode } from "react";
+import type { NextPage } from "next";
 import type { AppProps } from "next/app";
-import { AppWrapper } from "./context/sharedData"
+import SharedData from "../context/sharedData";
 import { useState } from "react";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
-  getLayout?: (page: ReactElement) => ReactNode
-}
+  getLayout?: (page: ReactElement) => ReactNode;
+};
 
 type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout
-}
+  Component: NextPageWithLayout;
+};
 
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  const [state, setState] = useState<string>("a state");
+  const [heroes, setHeroes] = useState([]);
   // Use the layout defined at the page level, if available
-  const getLayout = Component.getLayout ?? ((page) => page)
+  const getLayout = Component.getLayout ?? ((page) => page);
 
-  return getLayout(<AppWrapper><Component {...pageProps} aState={state} /></AppWrapper>  )
+  return getLayout(
+    <SharedData.Provider value={{heroes, setHeroes}}>
+      <Component {...pageProps} />
+    </SharedData.Provider>
+  );
 }
