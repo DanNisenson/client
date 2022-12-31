@@ -2,18 +2,22 @@ import React from "react";
 import { createContext, useContext, useState } from "react";
 import { Hero } from "../../types/heroes";
 
-export const SharedData = createContext();
-
 type Props = {
   children: React.ReactNode;
 };
 
-const AppWrapper = ({ children }: Props) => {
-  const [heroes, setHeroes] = useState<Hero[] | null>(null);
+export const SharedData = createContext({});
 
-  return <SharedData.Provider heroes={heroes}>{children}</SharedData.Provider>;
-}
+export const AppWrapper = ({ children }: Props) => {
+  const [heroes, setHeroes] = useState([]);
+  console.log(heroes);
+  return (
+    <SharedData.Provider value={{ heroes, setHeroes }}>
+      {children}
+    </SharedData.Provider>
+  );
+};
 
 export function useAppContext() {
   return useContext(SharedData);
-  }
+}
