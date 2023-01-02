@@ -1,11 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Image from "next/image";
-import type { Hero } from "../../types/heroes";
-import Layout from "../Layout";
+import React, { useContext, useEffect, useState } from "react";
 import SharedData from "../../context/sharedData";
 import apiCalls from "../../utils/apiCalls";
+import Layout from "../Layout";
 
 type Props = {};
 

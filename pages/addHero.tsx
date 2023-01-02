@@ -1,7 +1,7 @@
-import React from "react";
-import Layout from "./Layout";
 import axios from "axios";
-import { useState } from "react";
+import router from "next/router";
+import React, { useState } from "react";
+import Layout from "./Layout";
 
 function AddHero() {
   const [userInput, setUserInput] = useState({
@@ -29,7 +29,7 @@ function AddHero() {
     console.log(JSON.stringify(userInput))
 
     const resp: any = await axios.post(process.env.NEXT_PUBLIC_BASE_URL, userInput);
-    console.log(resp)
+    router.push("/heroes")
   };
 
   return (
