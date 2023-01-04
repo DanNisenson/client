@@ -29,7 +29,6 @@ const SingleHero = (props: Props) => {
         context.setHeroes(heroes);
       router.push("/heroes")
     }
-    console.log(resp);
   };
 
   return (
